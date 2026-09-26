@@ -1,1 +1,607 @@
+```html
 <!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formularz rekrutacyjny</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #080a10;
+      color: #f5f7fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .background {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, #26305b 0, transparent 35%),
+        radial-gradient(circle at 80% 80%, #411c51 0, transparent 35%);
+      filter: blur(20px);
+      opacity: .65;
+      z-index: -1;
+    }
+
+    .card {
+      width: min(720px, 100%);
+      background: rgba(14, 17, 27, .96);
+      border: 1px solid #30384d;
+      border-radius: 22px;
+      padding: 34px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, .45);
+    }
+
+    .top {
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #171e31;
+      color: #9bb0ff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    h1 {
+      margin: 14px 0 8px;
+      font-size: 32px;
+    }
+
+    .top p {
+      margin: 0 0 25px;
+      color: #9ca6b8;
+    }
+
+    .progress {
+      height: 8px;
+      background: #252b39;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress div {
+      height: 100%;
+      width: 33.33%;
+      background: linear-gradient(90deg, #6d5dfc, #b85cff);
+      transition: .25s;
+    }
+
+    .step {
+      margin: 10px 0 22px;
+      color: #8f99ab;
+      font-size: 13px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .page h2 {
+      font-size: 21px;
+      margin: 0 0 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+      margin: 16px 0;
+      color: #dfe4ef;
+    }
+
+    input,
+    textarea {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      border: 1px solid #343d52;
+      border-radius: 12px;
+      background: #0b0e16;
+      color: #fff;
+      padding: 13px 14px;
+      font: inherit;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #8176ff;
+      box-shadow: 0 0 0 3px rgba(129, 118, 255, .12);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .buttons button {
+      flex: 1;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      background: #735cff;
+      color: #fff;
+    }
+
+    .buttons button:hover {
+      opacity: .9;
+    }
+
+    .buttons .secondary {
+      background: #252b39;
+      color: #dce1eb;
+    }
+
+    .blocked,
+    .success {
+      text-align: center;
+      padding: 35px 10px;
+    }
+
+    .blocked h2 {
+      color: #ff7070;
+    }
+
+    .success h2 {
+      color: #77e2a2;
+    }
+
+    footer {
+      text-align: center;
+      color: #6f788a;
+      font-size: 12px;
+      margin-top: 25px;
+    }
+
+    @media (max-width: 550px) {
+      .card {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="background"></div>
+
+  <main class="card">
+
+    <div class="top">
+      <span class="badge">REKRUTACJA</span>
+
+      <h1>Formularz rekrutacyjny</h1>
+
+      <p>
+        Wypełnij formularz uważnie.
+        Nie opuszczaj karty podczas jego wypełniania.
+      </p>
+    </div>
+
+    <div class="progress">
+      <div id="bar"></div>
+    </div>
+
+    <div class="step" id="stepLabel">
+      Strona 1 z 3
+    </div>
+
+    <form id="form">
+
+      <!-- STRONA 1 -->
+
+      <section class="page active">
+
+        <h2>Podstawowe informacje</h2>
+
+        <label>
+          Imię i nazwisko
+          <input
+            required
+            name="name"
+            type="text"
+            placeholder="Wpisz imię i nazwisko"
+          >
+        </label>
+
+        <label>
+          Wiek
+          <input
+            required
+            name="age"
+            type="number"
+            min="13"
+            max="99"
+            placeholder="Np. 16"
+          >
+        </label>
+
+        <label>
+          Discord
+          <input
+            required
+            name="discord"
+            type="text"
+            placeholder="np. jakub123"
+          >
+        </label>
+
+      </section>
+
+
+      <!-- STRONA 2 -->
+
+      <section class="page">
+
+        <h2>Doświadczenie</h2>
+
+        <label>
+          Dlaczego chcesz dołączyć?
+          <textarea
+            required
+            name="why"
+            placeholder="Napisz kilka zdań..."
+          ></textarea>
+        </label>
+
+        <label>
+          Czy masz doświadczenie na serwerach RP?
+          <textarea
+            required
+            name="experience"
+            placeholder="Opisz swoje doświadczenie..."
+          ></textarea>
+        </label>
+
+        <label>
+          Ile czasu możesz poświęcić?
+          <textarea
+            required
+            name="time"
+            placeholder="Np. 2–4 godziny dziennie"
+          ></textarea>
+        </label>
+
+      </section>
+
+
+      <!-- STRONA 3 -->
+
+      <section class="page">
+
+        <h2>Ostatnie pytania</h2>
+
+        <label>
+          Jak zachowasz się podczas konfliktu z innym graczem?
+          <textarea
+            required
+            name="conflict"
+            placeholder="Opisz swoją reakcję..."
+          ></textarea>
+        </label>
+
+        <label>
+          Dlaczego powinniśmy wybrać właśnie Ciebie?
+          <textarea
+            required
+            name="choice"
+            placeholder="Napisz swoją odpowiedź..."
+          ></textarea>
+        </label>
+
+        <label>
+          Dodatkowe informacje
+          <textarea
+            name="extra"
+            placeholder="Opcjonalnie"
+          ></textarea>
+        </label>
+
+      </section>
+
+
+      <!-- PRZYCISKI -->
+
+      <div class="buttons">
+
+        <button
+          type="button"
+          id="prev"
+          class="secondary"
+        >
+          Wstecz
+        </button>
+
+        <button
+          type="button"
+          id="next"
+        >
+          Dalej
+        </button>
+
+        <button
+          type="submit"
+          id="submit"
+          hidden
+        >
+          Wyślij formularz
+        </button>
+
+      </div>
+
+    </form>
+
+
+    <!-- KOMUNIKAT O BLOKADZIE -->
+
+    <div
+      id="blocked"
+      class="blocked"
+      hidden
+    >
+      <h2>Formularz zablokowany</h2>
+
+      <p>
+        Wykryto opuszczenie formularza.
+        Rekrutacja została zakończona.
+      </p>
+    </div>
+
+
+    <!-- KOMUNIKAT PO WYSŁANIU -->
+
+    <div
+      id="success"
+      class="success"
+      hidden
+    >
+      <h2>Formularz wysłany!</h2>
+
+      <p>
+        Dziękujemy za zgłoszenie.
+      </p>
+    </div>
+
+
+    <footer>
+      Nie odświeżaj strony i nie przełączaj karty podczas wypełniania.
+    </footer>
+
+  </main>
+
+
+  <script>
+
+    // ==========================================
+    // PODSTAWOWE USTAWIENIA
+    // ==========================================
+
+    const pages = [
+      ...document.querySelectorAll(".page")
+    ];
+
+    const next = document.querySelector("#next");
+    const prev = document.querySelector("#prev");
+    const submit = document.querySelector("#submit");
+
+    const bar = document.querySelector("#bar");
+    const stepLabel = document.querySelector("#stepLabel");
+
+    const form = document.querySelector("#form");
+
+    const blocked = document.querySelector("#blocked");
+    const success = document.querySelector("#success");
+
+    let current = 0;
+    let locked = false;
+    let started = false;
+
+
+    // ==========================================
+    // ZMIANA STRONY
+    // ==========================================
+
+    function showPage(index) {
+
+      current = index;
+
+      pages.forEach((page, number) => {
+
+        page.classList.toggle(
+          "active",
+          number === index
+        );
+
+      });
+
+      prev.style.visibility =
+        index === 0
+          ? "hidden"
+          : "visible";
+
+      next.hidden =
+        index === pages.length - 1;
+
+      submit.hidden =
+        index !== pages.length - 1;
+
+      const progress =
+        ((index + 1) / pages.length) * 100;
+
+      bar.style.width =
+        progress + "%";
+
+      stepLabel.textContent =
+        `Strona ${index + 1} z ${pages.length}`;
+
+      started = true;
+    }
+
+
+    // ==========================================
+    // SPRAWDZANIE ODPOWIEDZI
+    // ==========================================
+
+    function validatePage() {
+
+      const fields =
+        pages[current].querySelectorAll(
+          "input, textarea"
+        );
+
+      for (const field of fields) {
+
+        if (!field.checkValidity()) {
+
+          field.reportValidity();
+
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+
+    // ==========================================
+    // PRZYCISK "DALEJ"
+    // ==========================================
+
+    next.addEventListener("click", () => {
+
+      if (!validatePage()) {
+        return;
+      }
+
+      if (current < pages.length - 1) {
+        showPage(current + 1);
+      }
+
+    });
+
+
+    // ==========================================
+    // PRZYCISK "WSTECZ"
+    // ==========================================
+
+    prev.addEventListener("click", () => {
+
+      if (current > 0) {
+        showPage(current - 1);
+      }
+
+    });
+
+
+    // ==========================================
+    // BLOKOWANIE FORMULARZA
+    // ==========================================
+
+    function blockForm(reason) {
+
+      if (locked) {
+        return;
+      }
+
+      if (!started) {
+        return;
+      }
+
+      locked = true;
+
+      form.hidden = true;
+
+      document.querySelector(".buttons").hidden = true;
+
+      blocked.hidden = false;
+
+      console.log(
+        "Formularz zablokowany:",
+        reason
+      );
+
+      /*
+        W TYM MIEJSCU PÓŹNIEJ DODAMY
+        WYSYŁANIE POWIADOMIENIA NA DISCORD.
+
+        Nie wpisujemy tutaj webhooka Discorda,
+        ponieważ byłby widoczny dla użytkowników.
+      */
+    }
+
+
+    // ==========================================
+    // WYKRYWANIE OPUSZCZENIA KARTY
+    // ==========================================
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+
+        if (document.hidden) {
+
+          blockForm(
+            "Użytkownik opuścił kartę."
+          );
+
+        }
+
+      }
+    );
+
+
+    // ==========================================
+    // WYKRYWANIE UTRATY FOKUSU
+    // ==========================================
+
+    window.addEventListener(
+      "blur",
+      () => {
+
+        /*
+          Celowo nie blokujemy formularza
+          tylko przez blur.
+
+          "blur" może wystąpić również
+          w innych sytuacjach i powodować
+          fałszywe wykrycia.
+
+          Główne wykrywanie robi
+          visibilitychange.
+        */
+
+        console.log(
+          "Okno utraciło fokus."
+```
